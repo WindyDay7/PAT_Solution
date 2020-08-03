@@ -15,10 +15,7 @@ void output_time(int minutes)
 {
     int hour = minutes / 60 + 8;
     minutes = minutes % 60;
-    if((hour > 17) || (hour == 17 && minutes != 0)) {
-        cout << "sorry";
-        return ;
-    }
+    
     if(hour < 10) {
         cout << "0" << hour << ":";
     }
@@ -71,7 +68,7 @@ int main()
         query.push_back(0);
     }
 
-    int time = 0, remain = 0;
+    int time = 0, remain = 0, shortest = 0;
     for (int i = 0; i < customer_num; i++)
     {
         cin >> transaction_time[i];
@@ -105,6 +102,7 @@ int main()
     while (end_flag(bank))
     {
         time += 1;
+        shortest = max_capacity + 1;
         for (int i = 0; i < bank.size(); i++)
         {
             if(bank[i].empty()) {
@@ -115,16 +113,30 @@ int main()
             if(temp_customer.need_time == 0) {
                 result[temp_customer.number] = time;
                 bank[i].pop();
-                if(remain < customer_num) {
-                    Customer new_customer = Write_info(remain, transaction_time[remain]);
-                    remain += 1;
-                    bank[i].push(new_customer);
-                }
             }
         }
-    }
+        for (int i = 0; i < bank.size(); i++)
+        {
+            if(shortest > bank[i].size() && bank[i].size() < max_capacity) {
+                shortest = bank[i].size();
+            }
+        }
+        for (int i = 0; i < bank.size(); i++)
+        {
+            if(bank[i].size() == shortest && remain < customer_num) {
+                Customer new_customer = Write_info(remain, transaction_time[remain]);
+                remain += 1;
+                bank[i].push(new_customer);
+            }
+        }
+    }    
     for (int i = 0; i < query_num; i++)
     {
+        int temp = result[query[i] - 1] - transaction_time[query[i] - 1];
+        if(temp >= 420) {
+            cout << "sorry" << endl;
+            continue;
+        }
         output_time(result[query[i] - 1]);
     }
     return 0;
