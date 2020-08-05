@@ -47,6 +47,7 @@ long long determine(char *N1, int radix, char *N2)
     }
     number1 = get_num(radix, N1);
     low = min+1; 
+    
     high = number1 > low? number1:low; 
     while(low <= high) {
         mid = (low+high) / 2;
