@@ -73,6 +73,7 @@ int main()
     queue<Customer> VIP; 
     vector<Table> table;
     vector<Customer> result;
+    queue<int> temp_VIP_table, temp_g_table;
     int table_num = 0, vip_table_num = 0, temp_vip_flag = 0;
     int play_time = 0, vip_flag = 0;
     int time_count = 0;
@@ -120,36 +121,58 @@ int main()
             }
             if(table[i].playing_customer.play_time != 0) {
                 if(table[i].vip_flag == 1) {
-                    VIP_num += 1;
+                    temp_VIP_table.push(i);
                 }
                 else {
-                    general_num += 1;
+                    temp_g_table.push(i);
                 }
             }
-        }
-        
-        for (int i = 0; i<table.size(); i++)
-        {
             if(table[i].playing_customer.play_time == 0) {
                 result.push_back(table[i].playing_customer);
+        } 
+        // if VIP 队列不是空的, 
+        if(!VIP.empty()) {
+            // If there are free VIP table, VIP table allocated to VIP customer
+            if(!temp_VIP_table.empty()) {
+                
+            }
+            // There are no free VIP table, VIP wait as general player
+            else {
+
+            }
+        }
+        // if has general players are waiting
+        else if(!general.empty()) {
+
+        }
+        else {
+            
+        }
+ 
+
+        if((!general.empty() && !VIP.empty() && general.front().arrive_time < VIP.front().arrive_time) || (!general.empty() && VIP.empty())) {
+            // the front in general arrive before VIP front 
+            if((time_count - general.front().arrive_time) %60 == 0) {
+                table[i].playing_customer = general.front();
+                table[i].playing_customer.serve_time = time_count;
+                general.pop();
+            }
+        }
+        else if((!general.empty() && !VIP.empty() && general.front().arrive_time > VIP.front().arrive_time) || (general.empty() && !VIP.empty())) {
+            if((time_count - VIP.front().arrive_time)%60 == 0) {
+                table[i].playing_customer = VIP.front();
+                table[i].playing_customer.serve_time = time_count;
+                VIP.pop();
+            } 
+        }
+
+        for (int i = 0; i<table.size(); i++)
+        {
+            
                 // this table is general table
                 if(table[i].vip_flag == 0) {
                     // chose the first in general and VIP queue, distribute it to this table
-                    if((!general.empty() && !VIP.empty() && general.front().arrive_time < VIP.front().arrive_time) || (!general.empty() && VIP.empty())) {
-                        // the front in general arrive before VIP front 
-                        if((time_count - general.front().arrive_time) %60 == 0) {
-                            table[i].playing_customer = general.front();
-                            table[i].playing_customer.serve_time = time_count;
-                            general.pop();
-                        }
-                    }
-                    else if((!general.empty() && !VIP.empty() && general.front().arrive_time > VIP.front().arrive_time) || (general.empty() && !VIP.empty())) {
-                        if((time_count - VIP.front().arrive_time)%60 == 0) {
-                            table[i].playing_customer = VIP.front();
-                            table[i].playing_customer.serve_time = time_count;
-                            VIP.pop();
-                        } 
-                    }
+                    
                 }
                 // There is problem here, if VIP and general table both free, what I chose 
                 // this table is for VIP
