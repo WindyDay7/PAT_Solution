@@ -5,7 +5,7 @@
         "label": "build hello world",       //当前编译任务的名字
         "type": "shell",
         "command": "g++",                   //编译时执行的程序
-        "args": ["-g", "-std=c++11", "-o", "Codeforces_1393D", "Codeforces_1393D.cpp"],    //传递给 command 的参数,也就是编译参数
+        "args": ["-g", "-std=c++11", "-o", "Codeforces_1389C", "Codeforces_1389C.cpp"],    //传递给 command 的参数,也就是编译参数
         "group": {
           "kind": "build",
           "isDefault": true                 //为 True 时，用户可以通过 Ctrl+Shift+B 直接运行编译任务 
