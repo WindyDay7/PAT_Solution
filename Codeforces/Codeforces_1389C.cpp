@@ -13,6 +13,7 @@ int main()
     int length = 0, temp = 0, result = 0;
     while (test--)
     {
+        result = 0;
         memset(p, 0, sizeof(p));
         scanf("%s", ch);
         length = strlen(ch);

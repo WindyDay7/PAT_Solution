@@ -5,7 +5,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/Codeforces_1389C",        //可执行文件的完整路径，文件名与 build.json 中生成的可执行文件名保持一致
+            "program": "${workspaceFolder}/Codeforces_1389B",        //可执行文件的完整路径，文件名与 build.json 中生成的可执行文件名保持一致
             "args": [],
             "stopAtEntry": false,           //是否在 main 函数处暂定执行
             "cwd": "${workspaceFolder}",
